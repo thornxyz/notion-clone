@@ -5,20 +5,21 @@ import liveblocks from "@/lib/liveblocks";
 import { auth } from "@clerk/nextjs/server";
 
 export async function createNewDocument() {
-    auth.protect();
-
+    // auth.protect();
     const { sessionClaims } = await auth();
+
+    if (!sessionClaims) {
+        return { error: "unauthenticated" };
+    }
+
+    const email = sessionClaims?.email;
 
     const docCollectionRef = adminDb.collection("documents");
     const docRef = await docCollectionRef.add({
         title: "New Doc"
-    })
+    });
 
-    const email = sessionClaims?.email;
-
-    if (typeof email !== 'string') {
-        return { error: "unauthenticated" };
-    } else {
+    if (email && typeof email === 'string') {
         await adminDb.collection('users').doc(email).collection('rooms').doc(docRef.id).set({
             userId: email,
             role: "owner",

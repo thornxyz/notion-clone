@@ -36,7 +36,7 @@ function NewDocumentButton() {
       <Dialog open={showSignInDialog} onOpenChange={setShowSignInDialog}>
         <DialogContent>
           <DialogDescription>
-            <SignIn />
+            <SignIn routing="hash" />
           </DialogDescription>
         </DialogContent>
       </Dialog>
