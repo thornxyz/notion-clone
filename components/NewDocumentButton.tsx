@@ -4,12 +4,8 @@ import { useState, useTransition } from "react";
 import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 import { createNewDocument } from "@/actions/actions";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-} from "@/components/ui/dialog";
 import { SignIn } from "@clerk/nextjs";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 
 function NewDocumentButton() {
   const [isPending, startTransition] = useTransition();
@@ -34,10 +30,8 @@ function NewDocumentButton() {
       </Button>
 
       <Dialog open={showSignInDialog} onOpenChange={setShowSignInDialog}>
-        <DialogContent>
-          <DialogDescription>
-            <SignIn routing="hash" />
-          </DialogDescription>
+        <DialogContent className="p-0 w-auto [&>button]:hidden">
+          <SignIn routing="hash" />
         </DialogContent>
       </Dialog>
     </>
